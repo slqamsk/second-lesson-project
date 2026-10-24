@@ -12,9 +12,11 @@ public class FirstLoginTests {
         $("#username").sendKeys("standard_user");
         $("#password").sendKeys("secret_sauce");
         $("#loginButton").click();
+
         $("#message").shouldHave(text("Вход в систему выполнен успешно! Загрузка..."));
         $("#message").shouldBe(visible);
-        $("#message").shouldBe(cssClass("success"));
+        $("#message").shouldHave(cssClass("success"));
+
         $("#greeting").shouldHave(text("Welcome, standard_user!"));
         $("#greeting").shouldBe(visible);
     }
@@ -25,9 +27,11 @@ public class FirstLoginTests {
         $("#username").sendKeys("standard_user");
         $("#password").sendKeys("wrong_password");
         $("#loginButton").click();
+
         $("#message").shouldHave(text("Invalid username or password."));
         $("#message").shouldBe(visible);
-        $("#message").shouldBe(cssClass("error"));
+        $("#message").shouldHave(cssClass("error"));
+
         $("#greeting").shouldBe(empty);
         $("#greeting").shouldNotBe(visible);
     }
@@ -38,9 +42,11 @@ public class FirstLoginTests {
         $("#username").sendKeys("standard_user");
         $("#password").sendKeys("secret_sauce");
         $("#password").pressEnter();
+
         $("#message").shouldHave(text("Вход в систему выполнен успешно! Загрузка..."));
         $("#message").shouldBe(visible);
         $("#message").shouldBe(cssClass("success"));
+
         $("#greeting").shouldHave(text("Welcome, standard_user!"));
         $("#greeting").shouldBe(visible);
     }
@@ -51,7 +57,9 @@ public class FirstLoginTests {
         $("#username").sendKeys("standard_user");
         $("#password").sendKeys("secret_sauce");
         $("#loginButton").click();
+
         $("#logoutButton").click();
+
         $("#logoutButton").shouldNotBe(visible);
         $("#loginContainer").shouldBe(visible);
         $("#loginInfo").shouldBe(visible);
@@ -66,12 +74,15 @@ public class FirstLoginTests {
         $("#username").sendKeys("incorrect_login");
         $("#password").sendKeys("secret_sauce");
         $("#loginButton").click();
+
         $("#message").shouldHave(text("Invalid username or password."));
         $("#message").shouldBe(visible);
         $("#message").shouldBe(cssClass("error"));
+
         $("#greeting").shouldBe(empty);
         $("#greeting").shouldNotBe(visible);
     }
+
     //06. Корректный логин, пароль от другого корректного логина - ошибка
     //Эту проверку в текущей реализации невозможно реализовать,
     //т.к. у всех пользователей один и тот же пароль
@@ -82,12 +93,15 @@ public class FirstLoginTests {
         $("#username").sendKeys("user06");
         $("#password").sendKeys("secret_sauce");
         $("#loginButton").click();
+
         $("#message").shouldHave(text("Invalid username or password."));
         $("#message").shouldBe(visible);
         $("#message").shouldBe(cssClass("error"));
+
         $("#greeting").shouldBe(empty);
         $("#greeting").shouldNotBe(visible);
     }
+
     //07. Проверить, что под заблокированным пользователем нельзя войти в систему
     @Test
     void test07ErrorBlockedUser() {
@@ -95,9 +109,11 @@ public class FirstLoginTests {
         $("#username").sendKeys("locked_out_user");
         $("#password").sendKeys("secret_sauce");
         $("#loginButton").click();
+
         $("#message").shouldHave(text("Пользователь заблокирован."));
         $("#message").shouldBe(visible);
         $("#message").shouldBe(cssClass("error"));
+
         $("#greeting").shouldBe(empty);
         $("#greeting").shouldNotBe(visible);
     }
@@ -105,11 +121,14 @@ public class FirstLoginTests {
     @Test
     void test08EmptyLoginCorrectPassword() {
         open("https://slqa.ru/cases/ChatGPTLogin/");
+        $("#username").clear();
         $("#password").sendKeys("secret_sauce");
         $("#loginButton").click();
+
         $("#message").shouldHave(text("Username is required."));
         $("#message").shouldBe(visible);
         $("#message").shouldBe(cssClass("error"));
+
         $("#greeting").shouldBe(empty);
         $("#greeting").shouldNotBe(visible);
     }
@@ -118,10 +137,13 @@ public class FirstLoginTests {
     void test09ErrorEmptyPassword() {
         open("https://slqa.ru/cases/ChatGPTLogin/");
         $("#username").sendKeys("standard_user");
+        $("#password").clear();
         $("#loginButton").click();
+
         $("#message").shouldHave(text("Password is required."));
         $("#message").shouldBe(visible);
         $("#message").shouldBe(cssClass("error"));
+
         $("#greeting").shouldBe(empty);
         $("#greeting").shouldNotBe(visible);
     }
@@ -129,10 +151,14 @@ public class FirstLoginTests {
     @Test
     void test10ErrorEmptyLoginAndPassword() {
         open("https://slqa.ru/cases/ChatGPTLogin/");
+        $("#username").clear();
+        $("#password").clear();
         $("#loginButton").click();
+
         $("#message").shouldHave(text("Username and Password are required."));
         $("#message").shouldBe(visible);
         $("#message").shouldBe(cssClass("error"));
+
         $("#greeting").shouldBe(empty);
         $("#greeting").shouldNotBe(visible);
     }
@@ -140,7 +166,7 @@ public class FirstLoginTests {
     //Нет технической возможности автоматизировать эту проверку
     //Требуется выполнять эту проверку ручным способом.
     @Test
-    void test11PasswordFiedDisplaysAsterisks() {
+    void test11PasswordFieldDisplaysAsterisks() {
         open("https://slqa.ru/cases/ChatGPTLogin/");
         $("#password").sendKeys("secret_sauce");
         $("#password").shouldHave(attribute("type", "password"));
