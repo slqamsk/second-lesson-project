@@ -1,13 +1,19 @@
 import com.codeborne.selenide.Condition;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 public class SimpleFormTest {
+
+    @BeforeEach
+    void setUp() {
+        open("https://slqa.ru/cases/SimpleForm/");
+    }
+
     @Test
     void test01SpecificCommands() {
-        open("https://slqa.ru/cases/SimpleForm/");
         sleep(4_000);
         $(By.id("unique_id")).sendKeys("Сергей");
         sleep(1_000);
@@ -22,7 +28,6 @@ public class SimpleFormTest {
 
     @Test
     void test02CSSSelectors() {
-        open("https://slqa.ru/cases/SimpleForm/");
         $("#unique_id").sendKeys("Сергей");
         $("[name=unique_name]").sendKeys("Слесарев");
         $("blockquote")

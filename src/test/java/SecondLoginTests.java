@@ -1,12 +1,15 @@
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.closeWindow;
 import static com.codeborne.selenide.Selenide.open;
 
+@TestMethodOrder(MethodOrderer.DisplayName.class)
 public class SecondLoginTests {
 
     //01. Корректные логин и пароль - успешный вход в систему по нажатию кнопки "Login"
