@@ -23,15 +23,11 @@ public class SimpleFormTest {
     @Test
     void test02CSSSelectors() {
         open("https://slqa.ru/cases/SimpleForm/");
-        sleep(4_000);
         $("#unique_id").sendKeys("Сергей");
-        sleep(1_000);
         $("[name=unique_name]").sendKeys("Слесарев");
-        sleep(1_000);
-        $("blockquote").shouldBe(Condition.exist);
-        $("blockquote").shouldHave(text("спрашивает"));
-
+        $("blockquote")
+                .shouldBe(Condition.exist)
+                .shouldHave(text("спрашивает"));
         $(".unique_class").shouldBe(Condition.visible);
-        sleep(2_000);
     }
 }
