@@ -22,6 +22,7 @@ public class CinemaTests {
     @Test
     void test01_simple_cinema() {
         open("https://slqamsk.github.io/cases/cinema/v02");
+        sleep(5_000);
         $("input[name=age]").setValue("35");
         String dateValue = "03.11.2026"; // Дата в формате YYYY-MM-DD
         $("input[name='date']").setValue(dateValue);
@@ -29,13 +30,11 @@ public class CinemaTests {
         $("input[name=film][value=crime]").click();
         $x("//button[@type='submit']").click();
         $x("//div[@id='result']").shouldHave(text("Стоимость билета: 400 рублей."));
+        sleep(5_000);
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "cinema_data.csv", numLinesToSkip = 1)
-        // Как Excel заставить сохранять значения с разделителем запятая
-        // Почему он стал требовать заключать значения в кавычки
-        // Почему для параметра session он эти кавычки принял как часть значения
     void test02CinemaParametrized(String age, String date, String session, String film, String message) {
         open("https://slqamsk.github.io/cases/cinema/v02");
         System.out.println(age + ", " + date + ", " + session + ", " + film + ", " + message);
