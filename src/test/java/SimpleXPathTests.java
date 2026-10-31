@@ -1,9 +1,13 @@
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
+
+import com.codeborne.selenide.Condition;
 
 public class SimpleXPathTests {
 
@@ -38,5 +42,40 @@ public class SimpleXPathTests {
 
         //3. Найдите элемент, начинающийся с текста "Казахстан" и проверьте, что он содержит текст "площадь 2 724 902".
         $x("//*[starts-with(.,'Казахстан')]").shouldHave(text("площадь 2 724 902"));
+    }
+
+    @Test
+    void test04XPathAxes() {
+        open("https://slqamsk.github.io/cases/pizza/v08/");
+        $x("//h3[.='Маргарита']/../button[contains(.,'Добавить')]")
+                .shouldBe(visible)
+                .shouldNotBe(Condition.disabled)
+                .click();
+
+        open("https://slqa.ru/cases/cinema/index_only_age.html");
+        $x("//button[.='Рассчитать']/ancestor::form")
+                .shouldBe(visible);
+
+        $x("//button[.='Рассчитать']")
+                .$x("/ancestor::form")
+                .shouldBe(visible);
+
+
+        open("https://www.specialist.ru/");
+        $x("//h3[contains(.,'Аналитик данных')]//ancestor::article[contains(@class,'main-course-card')]")
+                .shouldBe(visible);
+    }
+
+    @Test
+    void test05Example() {
+        Configuration.pageLoadStrategy = "eager";
+        open("https://www.specialist.ru/");
+        SelenideElement se = $x("//h3[contains(.,'Аналитик данных')]//ancestor::article[contains(@class,'main-course-card')]//div[@class='main-course-card-count']");
+        System.out.println(se.getTagName());
+
+        SelenideElement se1 = $x("//h3[contains(.,'Аналитик данных')]//ancestor::article[contains(@class,'main-course-card')]");
+        System.out.println(se1.getTagName());
+        SelenideElement se2 = se1.$x(".//div[@class='main-course-card-count']");
+        System.out.println(se2.getTagName());
     }
 }
