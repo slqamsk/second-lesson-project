@@ -6,7 +6,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
-@TestMethodOrder(MethodOrderer.MethodName.class)
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FourthLoginTests {
 
     @BeforeAll
@@ -33,6 +34,8 @@ public class FourthLoginTests {
     }
 
     //01. Корректные логин и пароль - успешный вход в систему по нажатию кнопки "Login"
+    @Tag("SmokeTest")
+    @Disabled
     @Test
     void test01SuccessLoginButton() {
         open("https://slqa.ru/cases/ChatGPTLogin/");
@@ -49,6 +52,7 @@ public class FourthLoginTests {
     }
 
     //02. Корректный логин, пароль не соответствует логину - ошибка
+    @Order(2)
     @Test
     void test02ErrorWrongPassword() {
         open("https://slqa.ru/cases/ChatGPTLogin/");
@@ -66,6 +70,7 @@ public class FourthLoginTests {
 
     //03. Корректные логин и пароль - успешный вход в систему по нажатию клавиши Enter на клавиатуре
     @Test
+    @Tag("SmokeTest")
     void test03SuccessLoginEnter() {
         open("https://slqa.ru/cases/ChatGPTLogin/");
         $("#username").sendKeys("standard_user");
@@ -81,6 +86,7 @@ public class FourthLoginTests {
     }
 
     //04. Выход из системы
+    @Order(1)
     @Test
     void test04LogoutSuccess() {
         open("https://slqa.ru/cases/ChatGPTLogin/");
@@ -134,6 +140,7 @@ public class FourthLoginTests {
     }
 
     //07. Проверить, что под заблокированным пользователем нельзя войти в систему
+    @Order(3)
     @Test
     void test07ErrorBlockedUser() {
         open("https://slqa.ru/cases/ChatGPTLogin/");
@@ -166,6 +173,7 @@ public class FourthLoginTests {
     }
 
     //09. Пустой пароль, корректный логин
+    @Order(2)
     @Test
     void test09ErrorEmptyPassword() {
         open("https://slqa.ru/cases/ChatGPTLogin/");
