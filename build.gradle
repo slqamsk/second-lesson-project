@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'io.qameta.allure' version '4.1.0'
 }
 repositories {
     mavenCentral()
@@ -10,6 +11,8 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'com.codeborne:selenide:7.17.0'
     testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.16'
+
+    testImplementation 'io.qameta.allure:allure-selenide:2.35.5'
 }
 test {
     useJUnitPlatform()

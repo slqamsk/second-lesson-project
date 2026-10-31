@@ -22,9 +22,10 @@ public class FourthLoginTests {
 
     @BeforeEach
     void beforeEach(TestInfo testInfo) {
-        String browser = new String[]{"chrome", "firefox", "edge"}[(int) (Math.random() * 3)];
-        Configuration.browser = browser;
-        System.out.println("Тест " + testInfo.getDisplayName() + " - начали выполнение. Браузер: " + browser);
+        //String browser = new String[]{"chrome", "firefox", "edge"}[(int) (Math.random() * 3)];
+        //Configuration.browser = browser;
+        //System.out.println("Тест " + testInfo.getDisplayName() + " - начали выполнение. Браузер: " + browser);
+        System.out.println("Тест " + testInfo.getDisplayName() + " - начали выполнение.");
     }
 
     @AfterEach

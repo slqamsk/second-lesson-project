@@ -3,6 +3,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -19,10 +22,15 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 public class CinemaTests {
 
+    @BeforeAll
+    static void beforeAll() {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+    }
+
     @Test
     void test01_simple_cinema() {
         open("https://slqamsk.github.io/cases/cinema/v02");
-        sleep(5_000);
+
         $("input[name=age]").setValue("35");
         String dateValue = "03.11.2026"; // Дата в формате YYYY-MM-DD
         $("input[name='date']").setValue(dateValue);
@@ -30,7 +38,7 @@ public class CinemaTests {
         $("input[name=film][value=crime]").click();
         $x("//button[@type='submit']").click();
         $x("//div[@id='result']").shouldHave(text("Стоимость билета: 400 рублей."));
-        sleep(5_000);
+
     }
 
     @ParameterizedTest
@@ -68,7 +76,6 @@ public class CinemaTests {
             return resultDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         }
     }
-
 
 
     static Stream<Arguments> provideCinemaData() {
